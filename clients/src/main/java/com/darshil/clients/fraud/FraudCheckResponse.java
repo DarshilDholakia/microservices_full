@@ -1,4 +1,4 @@
-package com.darshil.fraud;
+package com.darshil.clients.fraud;
 
 public record FraudCheckResponse(Boolean isFraudster) {
 }

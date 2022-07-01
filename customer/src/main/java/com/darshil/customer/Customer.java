@@ -1,9 +1,6 @@
 package com.darshil.customer;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -12,12 +9,14 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@ToString
 public class Customer {
 
     @Id
     @SequenceGenerator(
             name = "customer_id_sequence",
-            sequenceName = "customer_id_sequence"
+            sequenceName = "customer_id_sequence",
+            allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
