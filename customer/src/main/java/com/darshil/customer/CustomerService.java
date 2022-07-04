@@ -1,12 +1,11 @@
 package com.darshil.customer;
 
+import com.darshil.amqp.RabbitMQMessageProducer;
 import com.darshil.clients.fraud.FraudCheckResponse;
 import com.darshil.clients.fraud.FraudClient;
-import com.darshil.clients.notification.NotificationClient;
 import com.darshil.clients.notification.NotificationRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -14,14 +13,11 @@ import org.springframework.web.client.RestTemplate;
 @Service
 @AllArgsConstructor
 public class CustomerService {
-    @Autowired
+
     private final CustomerRepository customerRepository;
-    @Autowired
     private final RestTemplate restTemplate;
-    @Autowired
     private final FraudClient fraudClient;
-    @Autowired
-    private final NotificationClient notificationClient;
+    private final RabbitMQMessageProducer rabbitMQMessageProducer;
 
     public void registerCustomer(CustomerRegistrationRequest request) {
         Customer customer = Customer.builder()
@@ -44,10 +40,9 @@ public class CustomerService {
 //        );
 
         if (fraudCheckResponse.isFraudster()) throw new IllegalStateException("Customer is fraudster so not added");
-        //todo: send notification
 
-        // todo: make it async i.e. add to queue
+        // once confirmed that customer is not fraudster, we can publish this customer object to an exchange/queue
         NotificationRequest notificationRequest = new NotificationRequest(customer.getId(), customer.getEmail(), "Hello " + customer.getFirstName() + " " + customer.getLastName() + "!");
-        notificationClient.saveNotificationSentByDarshil(notificationRequest);
+        rabbitMQMessageProducer.publish(notificationRequest, "internal.exchange", "internal.notification.routing-key");
     }
 }
