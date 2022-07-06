@@ -57,6 +57,7 @@ services:
       - spring
     depends_on:
       - zipkin
+
   apigw:
     image: darshildholakia/apigw:latest
     container_name: apigw
@@ -69,6 +70,7 @@ services:
     depends_on:
       - zipkin
       - eureka-server
+
   customer:
     image: darshildholakia/customer:latest
     container_name: customer
@@ -83,6 +85,7 @@ services:
       - zipkin
       - postgres
       - rabbitmq
+
   fraud:
     image: darshildholakia/fraud:latest
     container_name: fraud

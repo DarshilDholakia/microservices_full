@@ -82,11 +82,16 @@
                     <artifactId>jib-maven-plugin</artifactId>
                     <version>3.1.4</version>
                     <configuration>
+                        <!-- Configures the base image to build your application on top of -->
                         <from>
+                            <!-- image tag enables us to provide image reference for the base image -->
                             <image>eclipse-temurin:17@sha256:2b47a8ea946ce1e5365a1562414ed576e378b7b670cadff3fb98ebecf2890cdc</image>
+                            <!-- Configure platforms of base images to select from a manifest list -->
                             <platforms>
                                 <platform>
+                                    <!-- The architecture of a base image to select from a manifest list -->
                                     <architecture>arm64</architecture>
+                                    <!-- The OS of a base image to select from a manifest list -->
                                     <os>linux</os>
                                 </platform>
                                 <platform>
@@ -101,6 +106,8 @@
                             </tags>
                         </to>
                     </configuration>
+                    <!-- bind jib:build to a Maven lifecycle, such as package, by adding the following execution to your jib-maven-plugin definition
+                     this enables us to build our container image just by running mvn package -->
                     <executions>
                         <execution>
                             <phase>package</phase>

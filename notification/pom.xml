@@ -11,6 +11,7 @@
     <packaging>jar</packaging>
     <artifactId>notification</artifactId>
 
+<!-- Plugins defined in this section will be executed during the build of this project -->
     <build>
         <plugins>
             <plugin>
@@ -20,6 +21,8 @@
         </plugins>
     </build>
 
+<!-- whenever this profile is active is when the maven plugin will be used.
+ Build profiles enable you to customize build for different environments -->
     <profiles>
         <profile>
             <id>build-docker-image</id>
