@@ -80,7 +80,7 @@ services:
       - SPRING_PROFILES_ACTIVE=docker
     networks:
       - spring
-      - postgres
+      - postgres # postgres network also since this service needs to communicate with a DB and the postgres container is running on the postgres network
     depends_on:
       - zipkin
       - postgres
@@ -95,7 +95,7 @@ services:
       - SPRING_PROFILES_ACTIVE=docker
     networks:
       - spring
-      - postgres
+      - postgres # postgres network also since this service needs to communicate with a DB and the postgres container is running on the postgres network
     depends_on:
       - zipkin
       - postgres
@@ -110,7 +110,7 @@ services:
       - SPRING_PROFILES_ACTIVE=docker
     networks:
       - spring
-      - postgres
+      - postgres # postgres network also since this service needs to communicate with a DB and the postgres container is running on the postgres network
     depends_on:
       - zipkin
       - postgres
